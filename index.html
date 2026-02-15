@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เครื่องคิดเลขสไตล์โมเดิร์น</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+        }
+
+        .calculator {
+            background-color: #222;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3);
+            width: 320px;
+        }
+
+        #display {
+            width: 100%;
+            height: 60px;
+            font-size: 2rem;
+            text-align: right;
+            margin-bottom: 20px;
+            padding: 10px;
+            box-sizing: border-box;
+            border: none;
+            background: #333;
+            color: #fff;
+            border-radius: 10px;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        button {
+            padding: 20px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            opacity: 0.8;
+        }
+
+        /* สีปุ่มตัวเลข */
+        .btn-number { background-color: #555; color: white; }
+        
+        /* สีปุ่มเครื่องหมาย */
+        .btn-operator { background-color: #ff9500; color: white; }
+        
+        /* สีปุ่มล้างข้อมูล */
+        .btn-clear { background-color: #ff3b30; color: white; grid-column: span 2; }
+        
+        /* ปุ่มเท่ากับ */
+        .btn-equal { background-color: #4cd964; color: white; grid-column: span 2; }
+    </style>
+</head>
+<body>
+
+<div class="calculator">
+    <input type="text" id="display" disabled>
+    <div class="buttons">
+        <button class="btn-clear" onclick="clearDisplay()">C</button>
+        <button class="btn-operator" onclick="appendToDisplay('/')">/</button>
+        <button class="btn-operator" onclick="appendToDisplay('*')">×</button>
+        
+        <button class="btn-number" onclick="appendToDisplay('7')">7</button>
+        <button class="btn-number" onclick="appendToDisplay('8')">8</button>
+        <button class="btn-number" onclick="appendToDisplay('9')">9</button>
+        <button class="btn-operator" onclick="appendToDisplay('-')">-</button>
+        
+        <button class="btn-number" onclick="appendToDisplay('4')">4</button>
+        <button class="btn-number" onclick="appendToDisplay('5')">5</button>
+        <button class="btn-number" onclick="appendToDisplay('6')">6</button>
+        <button class="btn-operator" onclick="appendToDisplay('+')">+</button>
+        
+        <button class="btn-number" onclick="appendToDisplay('1')">1</button>
+        <button class="btn-number" onclick="appendToDisplay('2')">2</button>
+        <button class="btn-number" onclick="appendToDisplay('3')">3</button>
+        <button class="btn-equal" onclick="calculate()">=</button>
+        
+        <button class="btn-number" style="grid-column: span 2;" onclick="appendToDisplay('0')">0</button>
+        <button class="btn-number" onclick="appendToDisplay('.')">.</button>
+    </div>
+</div>
+
+<script>
+    const display = document.getElementById('display');
+
+    function appendToDisplay(input) {
+        display.value += input;
+    }
+
+    function clearDisplay() {
+        display.value = "";
+    }
+
+    function calculate() {
+        try {
+            // ใช้ eval ในการคำนวณสมการจาก string
+            display.value = eval(display.value);
+        } catch (error) {
+            display.value = "Error";
+        }
+    }
+</script>
+
+</body>
+</html>
