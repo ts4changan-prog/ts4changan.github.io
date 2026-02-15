@@ -3,121 +3,154 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>เครื่องคิดเลขสไตล์โมเดิร์น</title>
+    <title>My Notion Style Page</title>
     <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #37352f;
+            --gray-bg: #f7f6f3;
+            --selection: #cce9ff;
+            --line-height: 1.5;
+            --max-width: 900px;
+        }
+
         body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            line-height: var(--line-height);
             display: flex;
             justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f4f4f9;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
         }
 
-        .calculator {
-            background-color: #222;
-            padding: 20px;
-            border-radius: 20px;
-            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3);
-            width: 320px;
-        }
-
-        #display {
+        /* โครงสร้างหลัก */
+        .page-container {
             width: 100%;
-            height: 60px;
-            font-size: 2rem;
-            text-align: right;
-            margin-bottom: 20px;
-            padding: 10px;
-            box-sizing: border-box;
-            border: none;
-            background: #333;
-            color: #fff;
-            border-radius: 10px;
+            max-width: var(--max-width);
+            padding: 0 96px; /* ระยะห่างซ้ายขวาแบบ Notion */
+            padding-bottom: 30vh;
         }
 
-        .buttons {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
+        /* ส่วนหัว (Cover & Icon) */
+        .cover-image {
+            height: 30vh;
+            background-image: url('https://images.unsplash.com/photo-1506784983877-45594efa4cbe?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'); /* เปลี่ยนรูป Cover ตรงนี้ */
+            background-size: cover;
+            background-position: center;
+            margin-left: -96px;
+            margin-right: -96px;
+            margin-bottom: -40px; /* ดึงเนื้อหาขึ้นไปทับ Cover */
         }
-
-        button {
-            padding: 20px;
-            font-size: 1.2rem;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        button:hover {
-            opacity: 0.8;
-        }
-
-        /* สีปุ่มตัวเลข */
-        .btn-number { background-color: #555; color: white; }
         
-        /* สีปุ่มเครื่องหมาย */
-        .btn-operator { background-color: #ff9500; color: white; }
-        
-        /* สีปุ่มล้างข้อมูล */
-        .btn-clear { background-color: #ff3b30; color: white; grid-column: span 2; }
-        
-        /* ปุ่มเท่ากับ */
-        .btn-equal { background-color: #4cd964; color: white; grid-column: span 2; }
+        /* กรณีไม่มี Cover ให้ลบ .cover-image ออก */
+
+        .page-icon {
+            font-size: 78px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        h1.page-title {
+            font-size: 40px;
+            font-weight: 700;
+            margin: 0;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(55, 53, 47, 0.09); /* เส้นจางๆ ใต้ชื่อ */
+            margin-bottom: 30px;
+        }
+
+        /* เนื้อหาทั่วไป */
+        p {
+            margin: 6px 0;
+            font-size: 16px;
+        }
+
+        /* Callout Box (กล่องข้อความเด่น) */
+        .callout {
+            padding: 16px 16px 16px 12px;
+            display: flex;
+            background-color: var(--gray-bg);
+            border-radius: 3px;
+            margin: 10px 0;
+            align-items: flex-start;
+        }
+        .callout-icon {
+            margin-right: 12px;
+            font-size: 24px;
+        }
+
+        /* รายการ (List) */
+        ul {
+            padding-left: 20px;
+            margin: 5px 0;
+        }
+        li {
+            margin-bottom: 2px;
+        }
+
+        /* ลิงก์ */
+        a {
+            color: inherit;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(55, 53, 47, 0.4);
+            transition: background 0.1s;
+        }
+        a:hover {
+            background-color: rgba(55, 53, 47, 0.08);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .page-container {
+                padding: 0 20px;
+            }
+            .cover-image {
+                margin-left: -20px;
+                margin-right: -20px;
+                height: 20vh;
+            }
+            h1.page-title {
+                font-size: 32px;
+            }
+        }
     </style>
 </head>
 <body>
 
-<div class="calculator">
-    <input type="text" id="display" disabled>
-    <div class="buttons">
-        <button class="btn-clear" onclick="clearDisplay()">C</button>
-        <button class="btn-operator" onclick="appendToDisplay('/')">/</button>
-        <button class="btn-operator" onclick="appendToDisplay('*')">×</button>
-        
-        <button class="btn-number" onclick="appendToDisplay('7')">7</button>
-        <button class="btn-number" onclick="appendToDisplay('8')">8</button>
-        <button class="btn-number" onclick="appendToDisplay('9')">9</button>
-        <button class="btn-operator" onclick="appendToDisplay('-')">-</button>
-        
-        <button class="btn-number" onclick="appendToDisplay('4')">4</button>
-        <button class="btn-number" onclick="appendToDisplay('5')">5</button>
-        <button class="btn-number" onclick="appendToDisplay('6')">6</button>
-        <button class="btn-operator" onclick="appendToDisplay('+')">+</button>
-        
-        <button class="btn-number" onclick="appendToDisplay('1')">1</button>
-        <button class="btn-number" onclick="appendToDisplay('2')">2</button>
-        <button class="btn-number" onclick="appendToDisplay('3')">3</button>
-        <button class="btn-equal" onclick="calculate()">=</button>
-        
-        <button class="btn-number" style="grid-column: span 2;" onclick="appendToDisplay('0')">0</button>
-        <button class="btn-number" onclick="appendToDisplay('.')">.</button>
+    <div style="width:100%; display:flex; justify-content:center;">
+        <div style="width:100%; max-width: 1100px;"> <div class="cover-image"></div>
+        </div>
     </div>
-</div>
 
-<script>
-    const display = document.getElementById('display');
+    <div class="page-container">
+        <div class="page-icon">🚀</div>
 
-    function appendToDisplay(input) {
-        display.value += input;
-    }
+        <h1 class="page-title">ยินดีต้อนรับสู่หน้าเว็บของฉัน</h1>
 
-    function clearDisplay() {
-        display.value = "";
-    }
+        <p>นี่คือตัวอย่างหน้าเว็บที่เขียนด้วย <strong>HTML5</strong> และ <strong>CSS</strong> โดยจำลองดีไซน์มาจาก Notion ครับ สังเกตว่าฟอนต์และความรู้สึกจะดูสะอาดตา (Clean) และเน้นเนื้อหาเป็นหลัก</p>
 
-    function calculate() {
-        try {
-            // ใช้ eval ในการคำนวณสมการจาก string
-            display.value = eval(display.value);
-        } catch (error) {
-            display.value = "Error";
-        }
-    }
-</script>
+        <div class="callout">
+            <div class="callout-icon">💡</div>
+            <div class="callout-content">
+                <strong>Tips:</strong> คุณสามารถแก้ไขข้อความในไฟล์ HTML นี้ได้เลย เหมือนกับการพิมพ์งานใน Word ครับ
+            </div>
+        </div>
+
+        <h3>สิ่งที่ทำได้:</h3>
+        <ul>
+            <li>แสดงผลได้ดีทั้งบนมือถือและคอมพิวเตอร์ (Responsive)</li>
+            <li>โหลดเร็วมาก เพราะไม่มีสคริปต์หนักๆ</li>
+            <li>ปรับแต่งสีและรูปภาพได้ง่าย</li>
+        </ul>
+
+        <p>ลองดูลิงก์ตัวอย่าง: <a href="#">คลิกที่นี่เพื่อไปต่อ</a></p>
+        
+        <br>
+        <hr style="border: 0; border-top: 1px solid rgba(55, 53, 47, 0.09);">
+        <p style="font-size: 14px; color: rgba(55, 53, 47, 0.6);">สร้างโดย AI Assistant</p>
+    </div>
 
 </body>
 </html>
